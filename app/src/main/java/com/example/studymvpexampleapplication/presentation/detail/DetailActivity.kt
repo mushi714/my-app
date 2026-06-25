@@ -40,8 +40,9 @@ class DetailActivity :
     override fun initData() {
         // 设置标题栏内容
         setBarTitle(intent.getStringExtra(WEB_TITLE) ?: "")
-        // 加载页面
-        webView.loadUrl(intent.getStringExtra(WEB_URL) ?: "")
+        // 加载页面，把 www.wanandroid.com 替换成 wanandroid.com
+        val url = intent.getStringExtra(WEB_URL)?.replace("www.wanandroid.com", "wanandroid.com") ?: ""
+        webView.loadUrl(url)
     }
 
     override fun allClick() {

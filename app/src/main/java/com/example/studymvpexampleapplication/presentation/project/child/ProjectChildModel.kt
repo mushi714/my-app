@@ -26,8 +26,9 @@ class ProjectChildModel : ProjectChildContract.Model {
                 listener.onSuccess(projectChildBaseBean.data)
             }
         }, onError = { e: Throwable ->
-            // 捕获网络或其他异常，打印堆栈以便调试
+            // 捕获网络或其他异常，打印堆栈以便调试，同时回调给 UI
             e.printStackTrace()
+            listener.onError(-1, "网络请求失败: ${e.message}")
         })
     }
 
@@ -47,6 +48,7 @@ class ProjectChildModel : ProjectChildContract.Model {
             }
         }, onError = { e: Throwable ->
             e.printStackTrace()
+            listener.onError(-1, "网络请求失败: ${e.message}")
         })
     }
 }

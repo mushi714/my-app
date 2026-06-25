@@ -8,7 +8,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.example.studymvpexampleapplication.R
@@ -18,7 +17,6 @@ import com.example.studymvpexampleapplication.presentation.home.HomeFragment
 import com.example.studymvpexampleapplication.presentation.navi.NaviFragment
 import com.example.studymvpexampleapplication.presentation.project.ProjectFragment
 import com.example.studymvpexampleapplication.presentation.tree.TreeFragment
-import androidx.core.view.get
 import androidx.viewpager.widget.ViewPager
 import com.example.studymvpexampleapplication.common.MyConfig
 import com.example.studymvpexampleapplication.presentation.about.AboutActivity

@@ -27,7 +27,7 @@ class API {
          * 应用中所有 Retrofit 请求的基础 URL，
          * 所有子接口中的相对路径都会拼接到此地址后面
          */
-        const val BASE_URL = "https://www.wanandroid.com/"
+        const val BASE_URL = "https://wanandroid.com/"
     }
 
     /**

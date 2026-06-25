@@ -21,8 +21,9 @@ class NaviModel : NaviContract.Model {
                 listener.onSuccess(baseNaviBean.data)
             }
         }, onError = { e: Throwable ->
-            // 对网络或其他异常进行统一捕获，并打印堆栈信息，方便调试和日志记录。
+            // 对网络或其他异常进行统一捕获，并打印堆栈信息，方便调试和日志记录，同时回调给 UI。
             e.printStackTrace()
+            listener.onError(-1, "网络请求失败: ${e.message}")
         })
     }
 }

@@ -60,6 +60,10 @@ object RetrofitService {
             .addInterceptor(requestLoggingInterceptor)
             // 设置连接超时时间：15 秒，防止网络请求长时间挂起
             .connectTimeout(15, TimeUnit.SECONDS)
+            // 设置读取超时时间：15 秒，防止服务器响应过慢
+            .readTimeout(15, TimeUnit.SECONDS)
+            // 设置写入超时时间：15 秒，防止上传数据时卡住
+            .writeTimeout(15, TimeUnit.SECONDS)
             .build()
 
         // ==================== Retrofit 构建 ====================

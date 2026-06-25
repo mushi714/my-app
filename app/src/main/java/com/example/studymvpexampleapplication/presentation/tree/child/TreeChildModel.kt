@@ -32,8 +32,9 @@ class TreeChildModel : TreeChildContract.Model {
                 listener.onSuccess(baseTreeChildBean.data)
             }
         }, onError = { e: Throwable ->
-            // 协程内抛出异常时打印堆栈，便于调试
+            // 协程内抛出异常时打印堆栈，便于调试，同时回调给 UI
             e.printStackTrace()
+            listener.onError(-1, "网络请求失败: ${e.message}")
         })
     }
 

@@ -31,8 +31,9 @@ class HomeModel : HomeContract.Model {
                 listener.onSuccess(baseBannerBean.data)
             }
         }, onError = { e: Throwable ->
-            // 网络或解析异常时打印异常信息
+            // 网络或解析异常时打印异常信息并回调给 UI
             e.printStackTrace()
+            listener.onError(-1, "网络请求失败: ${e.message}")
         })
     }
 

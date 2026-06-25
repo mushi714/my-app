@@ -11,27 +11,20 @@ import com.example.studymvpexampleapplication.adapter.ArticleAdapter
 import com.example.studymvpexampleapplication.base.mvp.BaseMVPFragment
 import com.example.studymvpexampleapplication.data.bean.Article
 import com.example.studymvpexampleapplication.data.bean.ArticleDetail
-import com.example.studymvpexampleapplication.data.bean.Banner
 
 import com.example.studymvpexampleapplication.databinding.FragmentHomeBinding
 import com.example.studymvpexampleapplication.presentation.detail.DetailActivity
 import com.example.studymvpexampleapplication.presentation.login.LoginActivity
-import com.example.studymvpexampleapplication.util.GlideImageLoader
-import com.yechaoa.yutilskt.DisplayUtil
 import com.yechaoa.yutilskt.show
-import kotlin.math.roundToInt
-import com.youth.banner.BannerConfig
-import com.youth.banner.listener.OnBannerListener
 
 /**
  * HomeFragment：基于 MVP 模式的首页 Fragment
  * - 继承自 BaseMVPFragment，实现 HomeContract.View 及各类回调接口
- * - 负责展示轮播图、文章列表、加载更多、收藏逻辑等
+ * - 负责展示文章列表、加载更多、收藏逻辑等
  */
 class HomeFragment :
     BaseMVPFragment<FragmentHomeBinding, HomeContract.Presenter>({ FragmentHomeBinding.inflate(it) }),
     HomeContract.View,                        // 与 Presenter 交互的 View 接口
-    OnBannerListener,                         // Banner 点击回调
     OnLoadMoreListener,                       // 上拉加载更多回调
     OnItemClickListener,                      // 列表项点击回调
     OnItemChildClickListener {                // 列表子项点击回调
@@ -42,8 +35,6 @@ class HomeFragment :
         private var CURRENT_PAGE = 0         // 当前加载的页码
     }
 
-    // 轮播图数据列表
-    private lateinit var bannerList: List<Banner>
     // 文章数据列表
     private lateinit var mDataList: MutableList<ArticleDetail>
     // 列表适配器
@@ -56,8 +47,7 @@ class HomeFragment :
     }
 
     override fun initData() {
-        // 请求轮播图和第一页文章列表
-        mPresenter.getBanner()
+        // 请求第一页文章列表
         mPresenter.getArticleList(CURRENT_PAGE)
     }
 
@@ -72,35 +62,12 @@ class HomeFragment :
 
     // ==================== Banner 回调 ====================
 
-    override fun getBannerSuccess(bannerList: MutableList<Banner>) {
-        this.bannerList = bannerList
-
-        // 提取图片地址和标题
-        val images: MutableList<String> = ArrayList()
-        val titles: MutableList<String> = ArrayList()
-        for (index in bannerList.indices) {
-            images.add(bannerList[index].imagePath)
-            titles.add(bannerList[index].title)
-        }
-
-        // 根据屏幕高度动态设置 Banner 高度
-        val layoutParams = binding.banner.layoutParams
-        layoutParams.height = (DisplayUtil.getScreenHeight() / 1.8).roundToInt()
-
-        // 配置并启动 Banner
-        binding.banner.setImages(images)
-            .setBannerTitles(titles)
-            .setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE)
-            .setImageLoader(GlideImageLoader())
-            .start()
-
-        // 监听 Banner 点击事件
-        binding.banner.setOnBannerListener(this)
+    override fun getBannerSuccess(bannerList: MutableList<com.example.studymvpexampleapplication.data.bean.Banner>) {
+        // Banner 已删除，不做任何处理
     }
 
     override fun getBannerError(errorMessage: String) {
-        // 轮播图加载失败，弹出提示
-        show(errorMessage)
+        // Banner 已删除，不做任何处理
     }
 
     // ==================== 文章列表回调 ====================
@@ -223,21 +190,6 @@ class HomeFragment :
             putExtra(DetailActivity.WEB_TITLE, mDataList[position].title)
         }
         startActivity(intent)
-    }
-
-    override fun OnBannerClick(position: Int) {
-        // Banner 点击，跳转到对应链接详情页
-        val intent = Intent(binding.root.context, DetailActivity::class.java).apply {
-            putExtra(DetailActivity.WEB_URL, bannerList[position].url)
-            putExtra(DetailActivity.WEB_TITLE, bannerList[position].title)
-        }
-        startActivity(intent)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        // Fragment 销毁视图时，停止 Banner 自动轮播，避免资源泄漏
-        binding.banner.stopAutoPlay()
     }
 
 }

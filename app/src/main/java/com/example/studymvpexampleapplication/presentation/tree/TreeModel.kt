@@ -30,8 +30,9 @@ class TreeModel : TreeContract.Model {
 
             // 协程出错时的统一处理
         }, onError = { e: Throwable ->
-            // 打印异常堆栈，便于调试
+            // 打印异常堆栈，便于调试并回调给 UI
             e.printStackTrace()
+            listener.onError(-1, "网络请求失败: ${e.message}")
         })
     }
 }

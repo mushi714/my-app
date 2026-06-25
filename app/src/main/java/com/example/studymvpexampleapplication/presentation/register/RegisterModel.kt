@@ -22,6 +22,7 @@ class RegisterModel : RegisterContract.Model {
         }
     }, onError = { e: Throwable ->
         e.printStackTrace()
+        listener.onError(-1, "网络请求失败: ${e.message}")
     })
 
 }

@@ -39,6 +39,7 @@ class LoginModel : LoginContract.Model {
         // 异常处理块：捕获网络或解析过程中的任何异常并打印堆栈
         onError = { e: Throwable ->
             e.printStackTrace()
+            listener.onError(-1, "网络请求失败: ${e.message}")
         }
     )
 }

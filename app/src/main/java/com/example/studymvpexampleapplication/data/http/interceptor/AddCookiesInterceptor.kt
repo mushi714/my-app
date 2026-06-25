@@ -21,8 +21,10 @@ class AddCookiesInterceptor : Interceptor {
         val stringSet = SpUtil.getStringSet(MyConfig.COOKIE)
 
         // 将每个 Cookie 都以 “Cookie” 头的形式添加到请求中
-        for (cookie in stringSet) {
-            builder.addHeader("Cookie", cookie)
+        if (stringSet != null && stringSet.isNotEmpty()) {
+            for (cookie in stringSet) {
+                builder.addHeader("Cookie", cookie)
+            }
         }
 
         // 构建新的请求并交给下一个拦截器或网络执行
